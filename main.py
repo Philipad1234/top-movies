@@ -7,6 +7,7 @@ from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField
 from wtforms.validators import DataRequired
 import requests
+from details import *
 
 '''
 Red underlines? Install the required packages first: 
@@ -23,7 +24,7 @@ This will install the packages from requirements.txt for this project.
 
 app = Flask(__name__)
 bootstrap = Bootstrap5(app)
-app.config['SECRET_KEY'] = '8BYkEfBA6O6donzWlSihBXox7C0sKR6b'
+app.config['SECRET_KEY'] = SECRET_KEY
 
 
 # CREATE DB
@@ -36,7 +37,7 @@ db = SQLAlchemy(model_class=Base)
 db.init_app(app)
 
 MOVIE_DB_URL = "https://api.themoviedb.org/3/search/movie"
-API_KEY = "1367ff7e0bc21a2e6dc18e527dd52b6e"
+API_KEY = API_KEY
 MOVIE_DB_IMG_URL = 'https://image.tmdb.org/t/p/original/'
 
 
@@ -114,7 +115,7 @@ def add():
 
         headers = {
             "accept": "application/json",
-            "Authorization": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIxMzY3ZmY3ZTBiYzIxYTJlNmRjMThlNTI3ZGQ1MmI2ZSIsIm5iZiI6MTczNjI0OTg2MS45MDMsInN1YiI6IjY3N2QxMjA1Y2Y0ZDU5Yzg0ZjcyN2NmZCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.N7y6MVxVLZs_qKblWXdqanh9uRn7c2ZLGugWRB5S8f8"
+            "Authorization": BEARER_TOKEN
         }
 
         response = requests.get(url=MOVIE_DB_URL, params=params, headers=headers).json()
@@ -128,8 +129,8 @@ def add():
 def find_movie():
     headers = {
         "accept": "application/json",
-        "Authorization": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIxMzY3ZmY3ZTBiYzIxYTJlNmRjMThlNTI3ZGQ1MmI2ZSIsIm5iZiI6MTczNjI0OTg2MS45MDMsInN1YiI6IjY3N2QxMjA1Y2Y0ZDU5Yzg0ZjcyN2NmZCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.N7y6MVxVLZs_qKblWXdqanh9uRn7c2ZLGugWRB5S8f8"
-    }
+        "Authorization": BEARER_TOKEN
+        }
 
     movie_id = request.args.get('id')
     response = requests.get(url=f"https://api.themoviedb.org/3/movie/{movie_id}", headers=headers).json()
